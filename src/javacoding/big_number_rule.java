@@ -3,6 +3,7 @@ package javacoding;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class big_number_rule {
@@ -23,41 +24,17 @@ public class big_number_rule {
 			array[i] = Integer.parseInt(st.nextToken());
 		}
 		
-		//첫번째로 큰수, 두번째로 큰수 찾기
-		int firstBig = 0;
-		int secondBig = 0;
-		for(int i=0; i<N; i++) {
-			if(array[i] >= firstBig) {
-				secondBig = firstBig;
-				firstBig = array[i];
-			} else {
-				if(array[i] > secondBig) {
-					secondBig = array[i];
-				}
-			}
-		}
+		//정렬하여 첫번째로 큰수, 두번째로 큰수 찾기
+		Arrays.sort(array);
+		int firstBig = array[N-1];
+		int secondBig = array[N-2];
 		
-		//첫번째로 큰수는 K번 더하고 두번째로 큰수는 1번 더해서 M이 나오도록 해야함
-		//-> M==0일때 break
+		//첫번째로 큰수는 (M/(K+1))*K + M%(K+1) 번을 더하면 되고
+		//두번째로 큰수는 M-(첫번째로 큰수를 더한 횟수) 번을 더하면 된다
 		int result = 0;
-		while(M>0) {
-			for(int i=0; i<K; i++) {
-				result += firstBig;
-				M--;
-				
-				if(M==0)
-					break;
-				
-			}
-			if(M==0)
-				break;
-			
-			result += secondBig;
-			M--;
-			if(M==0)
-				break;
-			
-		}
+		int count = (M/(K+1))*K + M%(K+1);
+		result += firstBig * count;
+		result += secondBig * (M-count);
 		
 		System.out.println(result);
 	}
