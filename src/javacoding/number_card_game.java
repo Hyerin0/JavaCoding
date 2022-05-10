@@ -15,30 +15,23 @@ public class number_card_game {
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		int N = Integer.parseInt(st.nextToken());
 		int M = Integer.parseInt(st.nextToken());
-		
-		//이차원 배열 입력받기
-		int[][] array = new int[N][M];
-		
+
+		int result = 0;
+		//한줄씩 입력받아 확인하기
 		for(int i=0; i<N; i++) {
 			st = new StringTokenizer(br.readLine());
+			
+			//현재줄에서 가장 작은 수를 찾기
+			int min_value = 10001;
 			for(int j=0; j<M; j++) {
-				array[i][j] = Integer.parseInt(st.nextToken());
+				int x = Integer.parseInt(st.nextToken());
+				min_value = Math.min(min_value, x);
 			}
+			
+			//가장 작은 수들 중에서 가장 큰 수 찾기
+			result = Math.max(min_value, result);
 		}
 		
-		//각 행별로 정렬하기
-		//정렬하여 각 행별로 첫번째 열은 가장 작은 값
-		for(int i=0; i<N; i++) {
-			Arrays.sort(array[i]);
-		}
-		
-		//첫번째 열을 비교하여 큰 값만 가져온다
-		int result = 0;
-		for(int i=0; i<N; i++) {
-			if(array[i][0] > result) {
-				result = array[i][0];
-			}
-		}
 		System.out.println(result);
 		
 	}
